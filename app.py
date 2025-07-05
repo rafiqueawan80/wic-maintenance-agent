@@ -3,6 +3,26 @@ from pydantic import BaseModel
 from google_sheets_backend import create_request, get_all_requests, update_request_status
 
 app = FastAPI()
+# Inject your own openapi schema
+def custom_openapi():
+    if app.openapi_schema:
+        return app.openapi_schema
+    openapi_schema = get_openapi(
+        title="WIC Maintenance Agent",
+        version="1.0.0",
+        description="API for creating and managing repair and maintenance requests.",
+        routes=app.routes,
+    )
+    openapi_schema["servers"] = [
+        {
+            "url": "https://wic-maintenance-agent.onrender.com",
+            "description": "Production server"
+        }
+    ]
+    app.openapi_schema = openapi_schema
+    return app.openapi_schema
+
+app.openapi = custom_openapi
 
 class RequestCreate(BaseModel):
     location: str

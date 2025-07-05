@@ -1,0 +1,194 @@
+{
+    "openapi": "3.1.0",
+    "info": {
+        "title": "FastAPI",
+        "version": "0.1.0"
+    },
+    "servers": [
+        {
+            "url": "https://wic-maintenance-agent.onrender.com",
+            "description": "Dev server"
+        }
+    ],
+    "paths": {
+        "/create_request": {
+            "post": {
+                "summary": "Api Create Request",
+                "operationId": "api_create_request_create_request_post",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RequestCreate"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/get_all_requests": {
+            "get": {
+                "summary": "Api Get All Requests",
+                "operationId": "api_get_all_requests_get_all_requests_get",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/update_request_status": {
+            "post": {
+                "summary": "Api Update Status",
+                "operationId": "api_update_status_update_request_status_post",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/StatusUpdate"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "HTTPValidationError": {
+                "properties": {
+                    "detail": {
+                        "items": {
+                            "$ref": "#/components/schemas/ValidationError"
+                        },
+                        "type": "array",
+                        "title": "Detail"
+                    }
+                },
+                "type": "object",
+                "title": "HTTPValidationError"
+            },
+            "RequestCreate": {
+                "properties": {
+                    "location": {
+                        "type": "string",
+                        "title": "Location"
+                    },
+                    "issue": {
+                        "type": "string",
+                        "title": "Issue"
+                    },
+                    "priority": {
+                        "type": "string",
+                        "title": "Priority",
+                        "default": "medium"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "location",
+                    "issue"
+                ],
+                "title": "RequestCreate"
+            },
+            "StatusUpdate": {
+                "properties": {
+                    "request_id": {
+                        "type": "integer",
+                        "title": "Request Id"
+                    },
+                    "new_status": {
+                        "type": "string",
+                        "title": "New Status"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "request_id",
+                    "new_status"
+                ],
+                "title": "StatusUpdate"
+            },
+            "ValidationError": {
+                "properties": {
+                    "loc": {
+                        "items": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "integer"
+                                }
+                            ]
+                        },
+                        "type": "array",
+                        "title": "Location"
+                    },
+                    "msg": {
+                        "type": "string",
+                        "title": "Message"
+                    },
+                    "type": {
+                        "type": "string",
+                        "title": "Error Type"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "loc",
+                    "msg",
+                    "type"
+                ],
+                "title": "ValidationError"
+            }
+        }
+    }
+}
