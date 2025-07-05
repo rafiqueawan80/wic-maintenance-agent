@@ -24,8 +24,6 @@ def custom_openapi():
     app.openapi_schema = openapi_schema
     return app.openapi_schema
 
-app.openapi = custom_openapi
-
 class RequestCreate(BaseModel):
     location: str
     issue: str
@@ -46,3 +44,4 @@ def api_get_all_requests():
 @app.post("/update_request_status")
 def api_update_status(data: StatusUpdate):
     return update_request_status(data.request_id, data.new_status)
+app.openapi = custom_openapi
