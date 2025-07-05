@@ -1,6 +1,8 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
 from google_sheets_backend import create_request, get_all_requests, update_request_status
+from fastapi.openapi.utils import get_openapi
+
 
 app = FastAPI()
 # Inject your own openapi schema
